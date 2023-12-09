@@ -1,5 +1,6 @@
 "use client";
 import * as z from "zod";
+import { useEffect } from "react";
 import qs from "query-string";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -45,18 +46,28 @@ const formSchema = z.object({
 });
 
 export const CreateChannelModel = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
 
   const isModalOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
+
   const params = useParams();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   });
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -104,7 +115,7 @@ export const CreateChannelModel = () => {
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                        className="bg-zinc-300/50 border-0 dark:bg-zinc-100 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter channel name"
                         {...field}
                       />

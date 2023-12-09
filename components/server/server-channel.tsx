@@ -48,10 +48,10 @@ export const ServerChannel = ({
       </p>
       {channel.name !== "general" && role !== MemberRole.GUEST && (
         <div className="ml-auto flex items-center gap-x-2">
-          <ActionTooltip label="edit" side="left">
+          <ActionTooltip label="Edit" side="left">
             <Edit className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
           </ActionTooltip>
-          <ActionTooltip label="delete" side="right">
+          <ActionTooltip label="Delete" side="right">
             <Trash className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
           </ActionTooltip>
         </div>

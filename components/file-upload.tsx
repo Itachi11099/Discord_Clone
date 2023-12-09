@@ -33,6 +33,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
       onClientUploadComplete={(res) => {
         onChange(res?.[0].url);
       }}
+      className="text-zinc-500"
       onUploadError={(err: Error) => console.log(err)}
     />
   );

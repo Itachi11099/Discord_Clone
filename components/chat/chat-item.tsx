@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface ChatItemProps {
   id: string;
@@ -96,7 +97,8 @@ export const ChatItem = ({
   }, [content]);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { onOpen } = useModal();
 
   const fileType = fileUrl?.split(".").pop();
   const isAdmin = currentMember.role === MemberRole.ADMIN;
@@ -220,7 +222,15 @@ export const ChatItem = ({
           )}
           {canDeleteMessage && (
             <ActionTooltip label="Delete">
-              <Trash className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-300 transition" />
+              <Trash
+                onClick={() =>
+                  onOpen("deleteMessage", {
+                    apiUrl: `${socketUrl}/${id}`,
+                    query: socketQuery,
+                  })
+                }
+                className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-300 transition"
+              />
             </ActionTooltip>
           )}
         </div>

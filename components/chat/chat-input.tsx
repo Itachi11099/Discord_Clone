@@ -41,7 +41,6 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query,
       });
       await axios.post(url, value);
-      router.refresh();
       form.reset();
     } catch (error) {
       console.log(error);
